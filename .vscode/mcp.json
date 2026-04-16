@@ -1,0 +1,15 @@
+{
+  "servers": {
+    "insforge": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@insforge/mcp@latest"
+      ],
+      "env": {
+        "API_KEY": "YOUR_API_KEY",
+        "API_BASE_URL": "https://b4qvihfq.ap-southeast.insforge.app"
+      }
+    }
+  }
+}
