@@ -1,3 +1,5 @@
+import Header from "@/components/header";
+
 function HomeLayout({
   children,
 }: Readonly<{
@@ -5,7 +7,8 @@ function HomeLayout({
 }>) {
   return (
     <main>
-      <div className="">{children}</div>
+      <Header />
+      <div className="overflow-hidden">{children}</div>
     </main>
   );
 }

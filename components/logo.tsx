@@ -36,7 +36,7 @@ function Logo({
       {showName && (
         <div className="flex flex-col">
           <span className="text-xl font-bold tracking-tighter text-foreground transition-colors group-hover:text-primary">
-            Sleek<span className="text-primary">.</span>
+            SitePilot<span className="text-primary">.</span>
           </span>
         </div>
       )}
