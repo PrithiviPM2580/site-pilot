@@ -4,9 +4,20 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import ModeToggle from "./mode-toggle";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  useAuth,
+  UserButton,
+} from "@insforge/nextjs";
+import { Button } from "./ui/button";
+import { Spinner } from "./ui/spinner";
 
 function Header() {
   const pathname = usePathname();
+  const { isLoaded } = useAuth();
   const isProjectPage = pathname.startsWith("/project/");
 
   return (
@@ -20,6 +31,24 @@ function Header() {
         <div className="">{!isProjectPage && <Logo />}</div>
         <div className="flex items-center justify-end gap-3">
           <ModeToggle />
+
+          {!isLoaded ? (
+            <Spinner />
+          ) : (
+            <>
+              <SignedOut>
+                <SignInButton>
+                  <Button variant="outline">Login</Button>
+                </SignInButton>
+                <SignUpButton>
+                  <Button>Sign up</Button>
+                </SignUpButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton mode="simple" afterSignOutUrl="/" showProfile />
+              </SignedIn>
+            </>
+          )}
         </div>
       </div>
     </header>
