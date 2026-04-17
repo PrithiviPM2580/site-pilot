@@ -11,6 +11,7 @@ import NewProjectChat from "./new-project-chat";
 import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
 import ChatPanel from "./chat-panel";
+import Canvas from "../canvas";
 
 type ChatInterfaceProps = {
   isProjectPage?: boolean;
@@ -138,7 +139,7 @@ function ChatInterface({
           </div>
         </div>
         <ChatPanel
-          className="h-full"
+          className="h-full pt-8"
           messages={messages}
           input={input}
           setInput={setInput}
@@ -149,7 +150,9 @@ function ChatInterface({
           onSubmit={onSubmit}
         />
       </div>
-      <div className="flex-1">Canvas</div>
+      <div className="flex-1">
+        <Canvas />
+      </div>
     </div>
   );
 }
