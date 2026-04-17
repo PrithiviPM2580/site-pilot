@@ -10,6 +10,7 @@ import { PromptInputMessage } from "../ai-elements/prompt-input";
 import NewProjectChat from "./new-project-chat";
 import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
+import ChatPanel from "./chat-panel";
 
 type ChatInterfaceProps = {
   isProjectPage?: boolean;
@@ -136,7 +137,19 @@ function ChatInterface({
             </h5>
           </div>
         </div>
+        <ChatPanel
+          className="h-full"
+          messages={messages}
+          input={input}
+          setInput={setInput}
+          isLoading={isLoading}
+          error={error}
+          status={status}
+          onStop={stop}
+          onSubmit={onSubmit}
+        />
       </div>
+      <div className="flex-1">Canvas</div>
     </div>
   );
 }
