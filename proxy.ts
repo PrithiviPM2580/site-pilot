@@ -2,7 +2,8 @@ import { InsforgeMiddleware } from "@insforge/nextjs/middleware";
 
 export default InsforgeMiddleware({
   baseUrl: process.env.INSFORGE_BASE_URL!,
-  publicRoutes: ["/"],
+  publicRoutes: ["/", "/sign-in", "/sign-up"],
+  useBuiltInAuth: false,
 });
 
 export const config = {
