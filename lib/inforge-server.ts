@@ -5,7 +5,9 @@ export async function getAuthServer() {
   const { token, user } = await auth();
 
   const insforge = createClient({
-    baseUrl: process.env.NEXT_PUBLIC_INSFORGE_BASE_URL!,
+    baseUrl:
+      process.env.INSFORGE_BASE_URL ||
+      "https://b4qvihfq.ap-southeast.insforge.app",
     edgeFunctionToken: token || undefined,
   });
 
