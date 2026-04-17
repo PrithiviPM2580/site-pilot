@@ -1,11 +1,16 @@
 import { clsx, type ClassValue } from "clsx";
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+const nanoId = customAlphabet(
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  12,
+);
+
 export function generateSlugId() {
-  return nanoid(12);
+  return nanoId();
 }
