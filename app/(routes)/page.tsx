@@ -1,7 +1,11 @@
-import React from "react";
+import ChatInterface from "@/components/chat";
 
 function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <ChatInterface isProjectPage={false} />
+    </div>
+  );
 }
 
 export default Home;
