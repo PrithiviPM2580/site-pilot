@@ -3,6 +3,7 @@ import { PromptInputMessage } from "../ai-elements/prompt-input";
 import { motion } from "motion/react";
 import { Suggestion, Suggestions } from "../ai-elements/suggestion";
 import ChatInput from "./chat-input";
+import { SUGGESTIONS_ITEMS } from "@/constants/index";
 
 type NewProjectChatProps = {
   input: string;
@@ -10,7 +11,7 @@ type NewProjectChatProps = {
   status: ChatStatus;
   setInput: (input: string) => void;
   onStop: () => void;
-  onSubmit: (message: PromptInputMessage, options: any) => void;
+  onSubmit: (message: PromptInputMessage, options?: any) => void;
 };
 
 function NewProjectChat({
