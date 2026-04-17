@@ -13,10 +13,7 @@ function InforgeProvider({ children }: { children: React.ReactNode }) {
     insforge as unknown as InsforgeBrowserProviderProps["client"];
 
   return (
-    <InsforgeBrowserProvider
-      client={providerClient}
-      afterSignInUrl="/dashboard"
-    >
+    <InsforgeBrowserProvider client={providerClient} afterSignInUrl="/">
       {children}
     </InsforgeBrowserProvider>
   );
