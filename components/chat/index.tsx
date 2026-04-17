@@ -8,6 +8,8 @@ import { DefaultChatTransport } from "ai";
 import { toast } from "sonner";
 import { PromptInputMessage } from "../ai-elements/prompt-input";
 import NewProjectChat from "./new-project-chat";
+import { Button } from "../ui/button";
+import { ArrowLeft } from "lucide-react";
 
 type ChatInterfaceProps = {
   isProjectPage?: boolean;
@@ -68,7 +70,7 @@ function ChatInterface({
   const isLoading = status === "submitted" || status === "streaming";
 
   const onSubmit = async (message: PromptInputMessage, options: any = {}) => {
-    if (message.text.trim()) {
+    if (!message.text.trim()) {
       toast.error("Please enter a message");
       return;
     }
@@ -93,6 +95,16 @@ function ChatInterface({
     setInput("");
   };
 
+  const handleBack = () => {
+    if (!isProjectPage) {
+      setSlugId(generateSlugId());
+      setHasStarted(false);
+      setMessages([]);
+      setProjectTitle(null);
+    }
+    router.push("/");
+  };
+
   if (!isProjectPage && !hasStarted) {
     return (
       <NewProjectChat
@@ -106,7 +118,27 @@ function ChatInterface({
     );
   }
 
-  return <div>ChatInterface</div>;
+  return (
+    <div className="flex h-screen w-full overflow-hidden">
+      <div className="relative w-full max-w-md border-r border-border">
+        {/* Project Title */}
+        <div className="absolute left-0 top-2 z-50 pb-2 bg-background ">
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            role="button"
+            onClick={handleBack}
+          >
+            <Button variant="secondary" size="icon">
+              <ArrowLeft />
+            </Button>
+            <h5 className="font-semibold tracking-tight truncate pr-4 ">
+              {projectTitle || "Untitled Project"}
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default ChatInterface;
