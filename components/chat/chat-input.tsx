@@ -22,7 +22,17 @@ function ChatInput({
 }: ChatInputProps) {
   const { isSignedIn } = useAuth();
   const [showAuthBanner, setShowAuthBanner] = useState<boolean>(false);
-  return <div>ChatInput</div>;
+
+  const handleSubmit = (message: PromptInputMessage) => {
+    if (!isSignedIn) {
+      setShowAuthBanner(true);
+      return;
+    }
+
+    setShowAuthBanner(false);
+    onSubmit(message, {});
+  };
+  return <div className="w-full flex flex-col gap-2"></div>;
 }
 
 export default ChatInput;
