@@ -61,3 +61,10 @@ export const SUGGESTIONS_ITEMS: Suggestions[] = [
       "A premium landing page for 'Helix AI', a healthcare diagnostics platform. Clinical white background with soft violet accents. Hero with 3D DNA visual, bento grid research nodes, trust badges showing '99.8% Accuracy', '2.4M+ Diagnoses', feature sections, and a sticky frosted header.",
   },
 ];
+
+export const TOOL_MODE_ENUM = {
+  SELECT: "SELECT",
+  HAND: "HAND",
+} as const;
+
+export type ToolModeType = keyof typeof TOOL_MODE_ENUM;
