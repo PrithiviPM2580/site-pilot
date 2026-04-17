@@ -68,7 +68,6 @@ function CanvasControls({
         >
           <PlusIcon />
         </Button>
-        <div className="min-w-10 text-center text-sm">{zoomPercent}%</div>
       </div>
     </div>
   );
