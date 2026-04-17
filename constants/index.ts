@@ -1,9 +1,9 @@
-interface Suggestions {
+export interface Suggestions {
   label: string;
   value: string;
 }
 
-const SUGGESTIONS_ITEMS: Suggestions[] = [
+export const SUGGESTIONS_ITEMS: Suggestions[] = [
   {
     label: "Modern HR SaaS Landing Page",
     value:
