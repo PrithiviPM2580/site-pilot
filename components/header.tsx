@@ -4,16 +4,10 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import ModeToggle from "./mode-toggle";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  useAuth,
-  UserButton,
-} from "@insforge/nextjs";
+import { SignedIn, SignedOut, useAuth, UserButton } from "@insforge/nextjs";
 import { Button } from "./ui/button";
 import { Spinner } from "./ui/spinner";
+import Link from "next/link";
 
 function Header() {
   const pathname = usePathname();
@@ -33,17 +27,18 @@ function Header() {
           <ModeToggle />
 
           {!isLoaded ? (
-            <Spinner />
+            <Spinner className="w-8 h-8" />
           ) : (
             <>
               <SignedOut>
-                <SignInButton>
-                  <Button variant="outline">Login</Button>
-                </SignInButton>
-                <SignUpButton>
-                  <Button>Sign up</Button>
-                </SignUpButton>
+                <Button asChild variant="outline">
+                  <Link href="/sign-in">Login</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/sign-up">Sign up</Link>
+                </Button>
               </SignedOut>
+
               <SignedIn>
                 <UserButton mode="simple" afterSignOutUrl="/" showProfile />
               </SignedIn>
