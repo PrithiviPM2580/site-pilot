@@ -63,6 +63,7 @@ function Canvas({ isProjectLoading, pages }: CanvasProps) {
                     "radial-gradient(circle, color-mix(in oklch, var(--primary) 30%, transparent) 1px, transparent 1px)",
                   backgroundSize: "20px 20px",
                 }}
+                onClick={() => setSelectedPageId(null)}
               >
                 {isProjectLoading && (
                   <div className="absolute w-full h-full flex flex-col gap-1.5 items-center justify-center">
