@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Spinner } from "../ui/spinner";
 import CanvasControls from "./canvas-controls";
 import PageFrame from "./page-frame";
+import useCanvas from "@/hooks/use-canvas";
 
 type CanvasProps = {
   pages?: any[];
@@ -23,6 +24,7 @@ function Canvas({ isProjectLoading, pages }: CanvasProps) {
   const [toolMode, setToolMode] = useState<ToolModeType>(TOOL_MODE_ENUM.SELECT);
   const [zoomPercent, setZoomPercent] = useState<number>(26);
   const [currentScale, setCurrentScale] = useState<number>(0.26);
+  const { selectedPageId, setSelectedPageId } = useCanvas();
   return (
     <>
       <div className="relative w-full h-full overflow-hidden">
@@ -89,8 +91,10 @@ function Canvas({ isProjectLoading, pages }: CanvasProps) {
                       x: 1000,
                       y: 100,
                     }}
-                    selectedFrameId={null}
-                    setSelectedFrameId={() => {}}
+                    selectedPageId={selectedPageId}
+                    setSelectedPageId={setSelectedPageId}
+                    isDeleting={false}
+                    onDeletePage={() => {}}
                   />
                 </TransformComponent>
               </div>
