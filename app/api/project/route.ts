@@ -1,6 +1,14 @@
-import { generateProjectTitle } from "@/app/action/action";
+import {
+  convertModelMessages,
+  generateProjectTitle,
+} from "@/app/action/action";
 import { getAuthServer } from "@/lib/inforge-server";
-import { UIMessage } from "ai";
+import {
+  createUIMessageStream,
+  createUIMessageStreamResponse,
+  generateId,
+  UIMessage,
+} from "ai";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -45,6 +53,70 @@ export async function POST(request: NextRequest) {
       if (!newProject) throw new Error("Failed to create project");
       project = newProject;
     }
+
+    const projectId = project?.id;
+
+    const { data: existingPages } = await insforge.database
+      .from("pages")
+      .select("id,name,rootStyles,htmlContent")
+      .eq("projectId", projectId)
+      .order("createdAt", { ascending: true })
+      .limit(2);
+
+    const hasExistingPages = existingPages && existingPages.length;
+
+    const lastMessage = messages[messages.length - 1];
+
+    await insforge.database.from("messages").insert([
+      {
+        projectId,
+        role: "user",
+        parts: lastMessage.parts,
+      },
+    ]);
+
+    const modelMessages = await convertModelMessages(messages.slice(10));
+
+    const lastUserMessage = (
+      lastMessage.parts?.find((p: any) => p.type === "text") as any
+    )?.text;
+    const imageParts = lastMessage.parts
+      .filter(
+        (part) => part.type === "file" && part.mediaType.startsWith("image/"),
+      )
+      .map((p: any) => ({
+        type: "image",
+        image: p.url,
+      }));
+
+    const { data: selectedPage } = selectedPageId
+      ? await insforge.database
+          .from("pages")
+          .select("id, name, rootstyles, htmlContent")
+          .eq("id", selectedPageId)
+          .single()
+      : { data: null };
+
+    const uiStream = createUIMessageStream({
+      generateId: generateId,
+      async execute({ writer }) {
+        try {
+          if (project?.title) {
+            writer.write({
+              type: "data-project-title",
+              data: {
+                title: project.title,
+              },
+              transient: true,
+            });
+          }
+        } catch (error) {}
+      },
+    });
+
+    return createUIMessageStreamResponse({
+      stream: uiStream,
+    });
   } catch (error) {
     return NextResponse.json(
       { error: "Internal Server Error" },

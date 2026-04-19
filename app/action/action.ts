@@ -1,6 +1,7 @@
 "use server";
 
 import { getAuthServer } from "@/lib/inforge-server";
+import { UIMessage } from "ai";
 
 export async function generateProjectTitle(messageText: string) {
   try {
@@ -29,4 +30,38 @@ export async function generateProjectTitle(messageText: string) {
     console.log("Project Title Error");
     return "Untitled Project";
   }
+}
+
+export async function convertModelMessages(messages: UIMessage[]) {
+  const modelMessages = messages.map((message) => {
+    const contentParts: any[] = [];
+
+    for (const part of message.parts) {
+      if (part.type === "text" && typeof part.text === "string") {
+        contentParts.push({
+          type: "text",
+          part: part.text,
+        });
+      } else if (part.type === "file") {
+        if (part.mediaType?.startsWith("image/") && part.url) {
+          contentParts.push({
+            type: "image",
+            image: part.url,
+          });
+        }
+      }
+    }
+
+    const content =
+      contentParts.length === 1 && contentParts?.[0].type === "text"
+        ? contentParts[0].text
+        : contentParts;
+
+    return {
+      role: message.role,
+      content,
+    };
+  });
+
+  return modelMessages;
 }
